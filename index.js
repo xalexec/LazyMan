@@ -1,5 +1,5 @@
 const LazyMan = function (name) {
-  var queue = []
+  let queue = []
   let cb = function () {
     let fn = queue.shift()
     fn && fn()
@@ -11,7 +11,7 @@ const LazyMan = function (name) {
     }, 0)
   }
   exec()
-  var add = function (fn, index) {
+  let add = function (fn, index) {
     clearTimeout(run)
     if (!index && index !== 0) {
       queue.push(fn)
@@ -47,3 +47,4 @@ const LazyMan = function (name) {
     }
   }
 }
+LazyMan('alex').sleep(1).eat('😄').sleepFirst(2).sleep(2).eat('😭')
