@@ -1,9 +1,16 @@
-let LM = function () {
+let LM = function (name) {
   this.queue = []
   this.cb = () => {
     const fn = this.queue.shift()
     fn && fn()
   }
+  setTimeout(() => {
+    this.cb()
+  })
+  this.queue.push(() => {
+    console.log(`hi ${name}`)
+    this.cb()
+  })
 }
 LM.prototype = {
   sleep (time) {
@@ -27,14 +34,6 @@ LM.prototype = {
   }
 }
 function LazyMan (name) {
-  var lm = new LM(name)
-  setTimeout(function () {
-    lm.cb()
-  })
-  lm.queue.push(function () {
-    console.log(`hi ${name}`)
-    lm.cb()
-  })
-  return lm
+  return new LM(name)
 }
 LazyMan('alex').sleep(1).eat('😄').sleepFirst(2).sleep(2).eat('😭')
